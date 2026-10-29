@@ -1,7 +1,30 @@
 # RightBoard — новый сайт
 
+**Опубликовано:** <https://alexkarnichuk-spec.github.io/rightboard/>
+**Исходники:** <https://github.com/alexkarnichuk-spec/rightboard>
+
 Статический сайт на основе контента rightboard.ru (бывший Taplink-лендинг).
 Без сборки, без зависимостей, без `node_modules` в самом сайте: чистые HTML + CSS + один маленький JS.
+
+## Как обновить опубликованную версию
+
+Репозиторий опубликован из `W:\repos\rightboard` (рабочая копия). Чтобы выложить правки:
+
+```powershell
+Copy-Item 'C:\Users\Администратор\Documents\Разное\rightboard-site\index.html' 'W:\repos\rightboard\' -Force
+Copy-Item '...\assets\css\main.css' 'W:\repos\rightboard\assets\css\' -Force
+cd W:\repos\rightboard
+git add -A
+git commit -m "правки"
+git push
+```
+
+GitHub Pages пересоберёт сайт за ~30 секунд. Те же команды работают
+и для новых страниц (`problems/index.html` и т. д.).
+
+**Перенос проекта на другое имя аккаунта или в корень домена.** Все пути
+внутри сайта относительные (`./assets/...`), поэтому менять ничего не нужно —
+кроме путей в `404.html` и адреса в `robots.txt`/`sitemap.xml`.
 
 ## Как посмотреть
 
@@ -25,6 +48,9 @@ python -m http.server 8123
 ```
 rightboard-site/
 ├─ index.html                  главная (этап 0 готов)
+├─ 404.html                    заглушка для разделов, которых ещё нет
+├─ robots.txt, sitemap.xml     для поисковиков
+├─ .nojekyll                   отключает Jekyll на GitHub Pages
 ├─ problems/                   «5 тихих убийц» ДПК          — этап 1
 ├─ mpk/                        физика МПК                    — этап 1
 ├─ quality/                    как отличить от имитации      — этап 1
