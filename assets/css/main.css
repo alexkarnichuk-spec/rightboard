@@ -1149,7 +1149,7 @@ p {
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 10px 28px;
+  gap: 2px 24px;
   padding-bottom: 18px;
   border-bottom: 1px solid var(--line);
   font-size: var(--fs-label);
@@ -1492,6 +1492,12 @@ p {
     gap: 22px 18px;
   }
 
+  /* Пятый факт в сетке 2×2 остаётся один — растягиваем на всю ширину */
+  .stat-strip .stat:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
   /* На телефоне факты идут строкой по два, а не в три узкие колонки */
   .stat__label {
     letter-spacing: 0.08em;
@@ -1512,15 +1518,21 @@ p {
     aspect-ratio: 4 / 3;
   }
 
+  /* Кейсы на телефоне: две крупные горизонтальные, остальные — квадраты 2×2 */
   .cases-grid {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 
-  .case,
+  .case {
+    grid-column: span 1;
+    aspect-ratio: 1;
+  }
+
   .case:nth-child(1),
   .case:nth-child(2) {
-    grid-column: span 1;
-    aspect-ratio: 4 / 3;
+    grid-column: span 2;
+    aspect-ratio: 16 / 9;
   }
 
   .site-footer__grid {
@@ -1608,6 +1620,20 @@ p {
 
   .stat__label {
     letter-spacing: 0.1em;
+  }
+
+  /* На телефоне кнопки — во всю ширину, друг под другом */
+  .btn-row {
+    flex-direction: column;
+  }
+
+  .btn-row .btn {
+    width: 100%;
+  }
+
+  /* Оверлайн в шапке hero — короче и без лишней разрядки */
+  .hero__overline {
+    letter-spacing: 0.14em;
   }
 }
 
