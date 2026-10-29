@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://alexkarnichuk-spec.github.io/rightboard/sitemap.xml

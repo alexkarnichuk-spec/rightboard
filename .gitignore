@@ -1,0 +1,11 @@
+# Артефакты QA и локальной работы — в репозиторий не нужны
+tools/qa/node_modules/
+tools/qa/shots/
+tools/qa/report.json
+tools/qa/summary.txt
+
+# Системный мусор
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
