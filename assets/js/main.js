@@ -44,23 +44,32 @@
   const toggle = $(".nav-toggle");
   const panel = $("#nav-panel");
   if (toggle && panel) {
+    const closeBtn = $(".nav-panel__close", panel);
+
     const setOpen = (open) => {
       toggle.setAttribute("aria-expanded", String(open));
       toggle.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
       panel.hidden = !open;
       panel.classList.toggle("is-open", open);
       document.documentElement.classList.toggle("nav-open", open);
+      if (open && closeBtn) closeBtn.focus();
+    };
+
+    const close = () => {
+      setOpen(false);
+      toggle.focus();
     };
 
     toggle.addEventListener("click", () => setOpen(panel.hidden));
+    if (closeBtn) closeBtn.addEventListener("click", close);
+
+    // Переход по ссылке закрывает меню без возврата фокуса на бургер
     panel.addEventListener("click", (event) => {
       if (event.target.closest("a")) setOpen(false);
     });
+
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && !panel.hidden) {
-        setOpen(false);
-        toggle.focus();
-      }
+      if (event.key === "Escape" && !panel.hidden) close();
     });
   }
 

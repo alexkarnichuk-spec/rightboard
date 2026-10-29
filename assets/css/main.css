@@ -1025,7 +1025,7 @@ p {
   z-index: 65;
   display: none;
   flex-direction: column;
-  padding: 100px var(--gutter) calc(28px + env(safe-area-inset-bottom, 0px));
+  padding: 0 var(--gutter) calc(28px + env(safe-area-inset-bottom, 0px));
   background: var(--paper);
   overflow-y: auto;
 }
@@ -1034,7 +1034,74 @@ p {
   display: flex;
 }
 
-.nav-panel a {
+/* Верхняя строка панели: заголовок и кнопка закрытия на месте бургера */
+.nav-panel__bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 72px;
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-panel__title {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.nav-panel__close {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+.nav-panel__close:hover {
+  border-color: var(--ink);
+}
+
+.nav-panel__close span,
+.nav-panel__close span::before {
+  display: block;
+  position: relative;
+  width: 18px;
+  height: 1px;
+  background: var(--ink);
+  content: "";
+}
+
+.nav-panel__close span {
+  transform: rotate(45deg);
+}
+
+.nav-panel__close span::before {
+  position: absolute;
+  transform: rotate(90deg);
+}
+
+.nav-panel__links {
+  display: grid;
+  padding-top: 8px;
+}
+
+.nav-panel__links a {
   display: flex;
   align-items: baseline;
   gap: 14px;
@@ -1047,16 +1114,11 @@ p {
   color: var(--ink);
 }
 
-.nav-panel a span {
+.nav-panel__links a span {
   font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: 0.16em;
   color: var(--bronze);
-}
-
-.nav-panel .btn {
-  margin-top: 24px;
-  width: 100%;
 }
 
 .site-footer {

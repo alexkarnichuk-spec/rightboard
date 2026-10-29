@@ -101,12 +101,32 @@ const check = (name, ok, detail = "") => {
       visible: !panel.hidden && getComputedStyle(panel).display !== "none",
       expanded: document.querySelector(".nav-toggle").getAttribute("aria-expanded"),
       locked: getComputedStyle(document.documentElement).overflow === "hidden",
+      hasClose: Boolean(panel.querySelector(".nav-panel__close")),
+      closeVisible: panel.querySelector(".nav-panel__close")
+        ? panel.querySelector(".nav-panel__close").getBoundingClientRect().width >= 40
+        : false,
+      focusInClose: document.activeElement?.classList.contains("nav-panel__close") ?? false,
+      phoneButton: Boolean(panel.querySelector('a[href^="tel:"]')),
     };
   });
   check("Меню открывается", opened.visible);
   check("aria-expanded переключается", opened.expanded === "true", opened.expanded);
   check("Прокрутка блокируется при открытом меню", opened.locked);
+  check("В меню есть кнопка закрытия", opened.hasClose && opened.closeVisible);
+  check("Фокус на кнопке закрытия", opened.focusInClose);
+  check("Кнопки телефона в меню нет", opened.phoneButton === false);
 
+  await page.click(".nav-panel__close");
+  await new Promise((r) => setTimeout(r, 250));
+  const closedByButton = await page.evaluate(() => ({
+    hidden: document.querySelector("#nav-panel").hidden,
+    focusBack: document.activeElement?.classList.contains("nav-toggle") ?? false,
+  }));
+  check("Кнопка закрытия закрывает меню", closedByButton.hidden);
+  check("Фокус возвращается на бургер", closedByButton.focusBack);
+
+  await page.click(".nav-toggle");
+  await new Promise((r) => setTimeout(r, 200));
   await page.keyboard.press("Escape");
   await new Promise((r) => setTimeout(r, 250));
   const closed = await page.evaluate(() => document.querySelector("#nav-panel").hidden);
